@@ -1,0 +1,59 @@
+#type Query {
+#    planets: [Planet!]!
+#    planet(id: ID!): Planet
+#    planetByName(name: String!): Planet
+#}
+#
+#type Mutation {
+#    createPlanet(name: String!, type: Type!, details: DetailsInput!): Planet!
+#}
+#
+#type Subscription {
+#    latestPlanet: Planet!
+#}
+#
+#type Planet @key(fields: "id") {
+#    id: ID!
+#    name: String!
+#    # from an astronomical point of view
+#    type: Type!
+#    isRotatingAroundSun: Boolean! @deprecated(reason: "Now it is not in doubt. Do not use this field")
+#    details: Details!
+#}
+#
+#interface Details {
+#    meanRadius: Float!
+#    mass: BigDecimal!
+#}
+#
+#type InhabitedPlanetDetails implements Details {
+#    meanRadius: Float!
+#    mass: BigDecimal!
+#    # in billions
+#    population: Float!
+#}
+#
+#type UninhabitedPlanetDetails implements Details {
+#    meanRadius: Float!
+#    mass: BigDecimal!
+#}
+#
+#enum Type {
+#    TERRESTRIAL_PLANET
+#    GAS_GIANT
+#    ICE_GIANT
+#    DWARF_PLANET
+#}
+#
+#input DetailsInput {
+#    meanRadius: Float!
+#    mass: MassInput!
+#    population: Float
+#}
+#
+#input MassInput {
+#    number: Float!
+#    tenPower: Int!
+#}
+#
+#scalar BigDecimal
